@@ -1,0 +1,127 @@
+--== Histórico ==-- 
+
+22/01
+- Procurar vídeos e documentos sobre o jogo;
+- Procurar sprites sheets;
+-- Separar sprites
+- Criar mapa em texto com IDs de cada tile;
+- Carregar tiles de acordo com o arquivo;
+
+23/01
+- Mapear tiles andáveis
+- Conectar tiles;
+
+-PacMan
+-- Spawn;
+-- Movimentação em tiles andáveis;
+-- Animação;
+-- Coleta de pellets;
+
+- Reset do mapa;
+
+24/01
+- Pathfinder
+-- Tratar tiles como nodes;
+-- Criar algoritmo de procura e avaliação;
+-- Criar testador;
+
+- Ghost (Blinky)
+-- Spawn;
+-- Uso do resultado do pathfind;
+-- Animação;
+-- Algoritmo de busca do Blinky;
+-- Algoritmo de Scatter;
+
+25/01
+- Ghost entrando no modo de medo do pacman;
+-- Algoritmo de fuga do pacman;
+- Ghost sendo comido pelo Pac Man;
+-- Algoritmo de busca do spawn;
+- Melhora na máquina de estado dos ghosts;
+
+- UI
+-- Exibir vidas do Pac Man;
+-- Exibir a fruta referente ao estágio;
+-- Exibir o Score e o Hightscore;
+
+26/01
+- Pac Man amedrontar ghosts quando pegar poweruup;
+- Pac Man comer ghosts;
+- Ghosts saírem da área após chegarem no spawn;
+- Ghosts capturarem o pac man;
+- Estado de morte do pac man;
+-- Animação;
+- Restart do pac man pós morte;
+
+- Game Over quando não houver mais vidas;
+- Algoritmo de busca do Pinky;
+
+27/01
+- Fruta
+-- Spawn;
+-- Pontuação conforme o tipo;
+-- Fruta conforme o nível;
+
+--Algoritmo de busca do Inki;
+--Algoritmo de busca do Clyde;
+
+- Wrap
+-- Novo id criado para identificar tiles que fazer Wrap;
+-- Tiles adicionais para evitar tiles negativos;
+`
+- Alternar estados dos ghosts conforme o tempo para cada nível;
+
+28/01
+- Sons
+-- Procurar sources bons;
+-- Normalizar sons;
+-- Formatar para os audios em loop ficarem imperceptíveis;
+-- Criar gerenciador de sons;
+-- Adicionar chamadas para acionar sons;
+
+- Temporização do estado de morte;
+- Vida extra aos 10.000 pontos;
+
+- GameController: controlador geral do jogo(da aplicação);
+-- Intro
+--- Vídeo para exibir o efeito de máquina de arcade ligando;
+-- Maquina de estado para alternar entre a intro e o jogo;
+-- Fluxo temporário ligando direto a intro no jogo;
+-- Fluxo temporário ligando o jogo na intro após um Game Over;
+
+29/01
+- Opções para teste automático no pathfinder;
+- Melhorias no pathfinder;
+- Redução de chamadas para o pathfinder;
+- Melhoria no algoritmo de perseguição do Inky;
+- Padronização no tratamento das escolhas de caminho dos fantasmas;
+- Gravar highscore;
+- Pausar em um frame quando o pacman comer um pellet;
+
+30/01
+- Controlar a saída dos ghosts por peças comidas e por tempo;
+- Pausar quando comer um fantasma;
+- Exibir pop-up do valor conseguido ao comer fruta e fantasmas;
+- Multiplicar pontos por fantasmas comidos em sequência;
+- Animação do labirindo quando o Pac Man vence;
+
+
+--== TODO ==--
+- Velocidades em geral
+- Centralizar os fantasmas dentro da área dele
+- Criar área de velocidade reduzida
+- Criar área de bloqueio de rota dos fantasmas
+
+- som mudar conforme peças comidas
+
+--== BackLog ==--
+- Menu do jogo
+- Demo
+- Bonus de movimentação para o Blinky
+
+--== Melhorias ==-- 
+- Usar ECS
+- Usar tileset
+- Usar mesma forma de detecção de colisão do jogo original
+- Separar as funções de controle do jogo da classe StageController e deixa lá apenas metodos de manutenção do labirinto
+- Criar uma classe com todas as informações do nível (velocidades, fruta, tempo de saída dos fantasmas)

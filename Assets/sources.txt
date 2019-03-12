@@ -1,0 +1,25 @@
+Doc:
+https://www.slideshare.net/grimlockt/pac-man-6561257
+http://gameinternals.com/post/2072558330/understanding-pac-man-ghost-behavior
+http://www.gamasutra.com/view/feature/3938/the_pacman_dossier.php?print=1
+
+Video:
+https://www.youtube.com/watch?v=ICwzQ0_RCcQ (Pac-Man Ghost AI Explained)
+https://www.youtube.com/watch?v=dScq4P5gn4A
+-- https://youtu.be/dScq4P5gn4A?t=45  (Start)
+-- https://youtu.be/dScq4P5gn4A?t=163 (Next Level)
+-- https://youtu.be/dScq4P5gn4A?t=158 (Life)
+-- https://youtu.be/dScq4P5gn4A?t=178 (Death)
+
+Emulator:
+https://www.retrogames.cc/arcade-games/pac-man-midway.html
+
+Spites:
+https://www.spriters-resource.com/arcade/pacman/sheet/52631/
+https://raw.githubusercontent.com/rm-hull/big-bang/master/examples/pacman/data/spritemap-192.png
+https://raw.githubusercontent.com/rm-hull/big-bang/master/examples/pacman/data/spritemap-384.png
+
+Sounds:
+https://www.sounds-resource.com/arcade/pacman/sound/10603/
+http://www.classicgaming.cc/classics/pac-man/sounds
+https://www.youtube.com/watch?v=Kwf6_Btok1o
