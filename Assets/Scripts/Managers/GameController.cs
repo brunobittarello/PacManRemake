@@ -6,6 +6,7 @@ class GameController : MonoBehaviour
     const float INTRO_MIN_TIME = 2;
 
     public VideoPlayer intro;
+    public MenuManager menu;
     public StageController stage;
 
     GameState status;
@@ -20,6 +21,7 @@ class GameController : MonoBehaviour
     private void Start()
     {
         intro.gameObject.SetActive(true);
+        menu.gameObject.SetActive(false);
         stage.gameObject.SetActive(false);
         status = GameState.Intro;
 
@@ -30,6 +32,8 @@ class GameController : MonoBehaviour
     {
         if (status == GameState.Intro)
             UpdateIntro();
+        else if (status == GameState.Menu)
+            UpdateMenu();
         else if (status == GameState.Game)
             UpdateGame();
     }
@@ -38,29 +42,35 @@ class GameController : MonoBehaviour
     {
         timer += Time.deltaTime;
         if (timer > INTRO_MIN_TIME && intro.isPlaying == false)
+            StartMenu();
+    }
+
+    void UpdateMenu()
+    {
+        if (Input.anyKey)
             StartGame();
     }
 
     void UpdateGame()
     {
         if (stage.IsGameOver)
-            BackToMenu();
+            StartMenu();
+    }
+
+    void StartMenu()
+    {
+        status = GameState.Menu;
+        intro.gameObject.SetActive(false);
+        stage.gameObject.SetActive(false);
+        menu.StartMenu();
     }
 
     void StartGame()
     {
         status = GameState.Game;
         intro.gameObject.SetActive(false);
+        menu.gameObject.SetActive(false);
         stage.NewGame();
-    }
-
-    void BackToMenu()
-    {        
-        status = GameState.Intro;//TODO menu
-        intro.gameObject.SetActive(true);
-        stage.gameObject.SetActive(false);
-        intro.Play();
-        timer = 0;
     }
 }
 

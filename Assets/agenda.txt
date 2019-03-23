@@ -105,6 +105,14 @@
 - Multiplicar pontos por fantasmas comidos em sequência;
 - Animação do labirindo quando o Pac Man vence;
 
+13/03
+- Criar uma classe com todas as informações do nível (velocidades, fruta, tempo de saída dos fantasmas)
+
+14/03
+- Menu do jogo
+
+
+
 
 --== TODO ==--
 - Velocidades em geral
@@ -115,13 +123,9 @@
 - som mudar conforme peças comidas
 
 --== BackLog ==--
-- Menu do jogo
 - Demo
 - Bonus de movimentação para o Blinky
 
---== Melhorias ==-- 
-- Usar ECS
-- Usar tileset
+--== Melhorias ==--
 - Usar mesma forma de detecção de colisão do jogo original
 - Separar as funções de controle do jogo da classe StageController e deixa lá apenas metodos de manutenção do labirinto
-- Criar uma classe com todas as informações do nível (velocidades, fruta, tempo de saída dos fantasmas)

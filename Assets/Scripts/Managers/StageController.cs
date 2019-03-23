@@ -27,6 +27,8 @@ class StageController : AnimatedSprite
     public Transform pelletsContainer;
     public Transform charactersContainer;
 
+    public Stage[] stagesConfig;
+
     [Header("Sprites")]
     public Sprite[] stageSprites;
     public SpriteRenderer stageRenderer;
@@ -34,12 +36,6 @@ class StageController : AnimatedSprite
     [Header("Fruits")]
     public Sprite[] fruitIcons;
     public int[] fruitPoints;
-    public int[] fruitLevelMax;
-    public int[] powerUpSecondsPerLevel;
-    [Header("Ghost States")]
-    public int[] ghostStatesLevel1;
-    public int[] ghostStatesLevel2to4;
-    public int[] ghostStatesLevel5;
 
     [Header("Prefabs")]
     public GameObject prefabPellet;
@@ -62,7 +58,7 @@ class StageController : AnimatedSprite
     int lives;
     int score;
     int level;
-    int levelFruit;
+    Stage stage;
     internal StageState Status { get; private set; }
     float timer;
     float timerFreeze;
@@ -335,19 +331,18 @@ class StageController : AnimatedSprite
                 for (int i = 0; i < ghosts.Length; i++)
                     ghosts[i].OnPowerUpIsOver();                
         }
-        else if (ghostMomentIndex < ghostStatesLevel1.Length)
+        else if (ghostMomentIndex < stage.ghostStates.Length)
         {
             timer += Time.deltaTime;
-            var stageGhostMoments = (level >= 5) ? ghostStatesLevel5 : (level == 1) ? ghostStatesLevel1 : ghostStatesLevel2to4;
-            if (timer > stageGhostMoments[ghostMomentIndex])
+            if (timer > stage.ghostStates[ghostMomentIndex])
             {
-                timer -= stageGhostMoments[ghostMomentIndex];
+                timer -= stage.ghostStates[ghostMomentIndex];
                 ghostMomentIndex++;
                 ghostMoment = (ghostMoment == GhostState.Chasing) ? GhostState.Scatter : GhostState.Chasing;
                 for (int i = 0; i < ghosts.Length; i++)
                     ghosts[i].ChangeToStageMoment();
 
-                Debug.Log(ghostMoment.ToString() + " " + ((ghostMomentIndex == stageGhostMoments.Length) ? "Indef" : stageGhostMoments[ghostMomentIndex].ToString()));
+                Debug.Log(ghostMoment.ToString() + " " + ((ghostMomentIndex == stage.ghostStates.Length) ? "Indef" : stage.ghostStates[ghostMomentIndex].ToString()));
             }
 
         }
@@ -426,14 +421,9 @@ class StageController : AnimatedSprite
 
     void LevelUp()
     {
+        stage = stagesConfig[level];
         level++;
-        for (var i = 0; i < fruitLevelMax.Length; i++)
-            if (fruitLevelMax[i] > level)
-                break;
-            else
-                levelFruit = i;
-
-        UIController.instance.SetNewFruit(fruitIcons[levelFruit]);
+        UIController.instance.SetNewFruit(fruitIcons[stage.fruitId]);
         ResetStage();
     }
 
@@ -526,13 +516,13 @@ class StageController : AnimatedSprite
         Ghost.blinkWhite = false;
         for (int i = 0; i < ghosts.Length; i++)
             ghosts[i].OnPacManPowersUp();
-        powerUpTimer = powerUpSecondsPerLevel[Mathf.Min(level, powerUpSecondsPerLevel.Length - 1)];
+        powerUpTimer = stage.PacManPowerSeconds;
     }
 
     void EnableFruit()
     {
         fruit.gameObject.SetActive(true);
-        fruit.sprite = fruitIcons[levelFruit];
+        fruit.sprite = fruitIcons[stage.fruitId];
     }
 
     void VerifyPacManCatchFruit()
@@ -541,10 +531,10 @@ class StageController : AnimatedSprite
             return;
 
         fruit.gameObject.SetActive(false);
-        AddScore(fruitPoints[levelFruit]);
-        scorePopUp.SetScore(fruit.transform.localPosition, fruitPoints[levelFruit]);
+        AddScore(fruitPoints[stage.fruitId]);
+        scorePopUp.SetScore(fruit.transform.localPosition, fruitPoints[stage.fruitId]);
         SoundManager.instance.PlayPacManEatingFruit();
-        AddScore(fruitPoints[levelFruit]);
+        AddScore(fruitPoints[stage.fruitId]);
     }
 
     void ManageGhostSounds()

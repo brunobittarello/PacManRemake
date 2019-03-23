@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-class AnimatedSprite : MonoBehaviour
+public class AnimatedSprite : MonoBehaviour
 {
     float animationRate;
     float animationTimer;
