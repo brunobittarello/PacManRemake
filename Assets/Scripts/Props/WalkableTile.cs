@@ -8,6 +8,8 @@ class WalkableTile
     public WalkableTile[] conns;
     public ConnType connType;
     public GameObject go;
+    public bool IsTunnel;
+    public bool IsUpLocked;
 
     //Pathfinding
 
@@ -126,6 +128,7 @@ enum TileType : byte
     GhostArea,
     GhostGate,
     Wrap,
+    Tunnel,
 }
 
 enum ConnType : byte

@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 66e1fb81790a6d5408ed46bf82c1d7fd, type: 3}
-  m_Name: Stage11
+  m_Name: Stage20
   m_EditorClassIdentifier: 
-  fruitId: 6
+  fruitId: 7
   PacManSpeed: 1
   PacManPowerSpeed: 1
-  PacManPowerSeconds: 2
+  PacManPowerSeconds: 0
   GhostSpeed: 0.95
   GhostFrightenedSpeed: 0.6
   GhostTunnelSpeed: 0.5
@@ -24,7 +24,7 @@ MonoBehaviour:
   pelletsToFreeInky: 0
   timeToFreeClyde: 0
   pelletsToFreeClyde: 0
-  pelletsLeftToSpeedUpBlinkyLevel1: 60
+  pelletsLeftToSpeedUpBlinkyLevel1: 120
   speedUpBlinkyLevel1: 1
-  pelletsLeftToSpeedUpBlinkyLevel2: 30
+  pelletsLeftToSpeedUpBlinkyLevel2: 60
   speedUpBlinkyLevel2: 1.05

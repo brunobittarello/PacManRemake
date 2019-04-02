@@ -13,10 +13,18 @@ MonoBehaviour:
   m_Name: Stage09
   m_EditorClassIdentifier: 
   fruitId: 5
-  PacManSpeed: 0
-  PacManPowerSpeed: 0
+  PacManSpeed: 1
+  PacManPowerSpeed: 1
   PacManPowerSeconds: 1
-  GhostSpeed: 0
-  GhostFrightenedSpeed: 0
-  GhostTunnelSpeed: 0
+  GhostSpeed: 0.95
+  GhostFrightenedSpeed: 0.6
+  GhostTunnelSpeed: 0.5
   ghostStates: 07000000140000000500000014000000050000000d04000005000000
+  timeToFreeInky: 0
+  pelletsToFreeInky: 0
+  timeToFreeClyde: 0
+  pelletsToFreeClyde: 0
+  pelletsLeftToSpeedUpBlinkyLevel1: 60
+  speedUpBlinkyLevel1: 1
+  pelletsLeftToSpeedUpBlinkyLevel2: 30
+  speedUpBlinkyLevel2: 1.05

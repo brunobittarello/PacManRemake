@@ -4,9 +4,7 @@ using UnityEngine;
 
 class Ghost : AnimatedSprite
 {
-    const float TILE_SNAPPING    = 0.99f;
-    const float SPEED            = 7;
-    const float SPEED_FRIGHTENED = 5f;
+    const float TILE_SNAPPING    = 0.99f;    
     const float SPEED_EYE        = 12;
 
     internal static bool blinkWhite;
@@ -30,6 +28,9 @@ class Ghost : AnimatedSprite
     WalkableTile tileTarget;
     float inBetwen;
 
+    float speedNormal;
+    float speedFrightened;
+    float speedTunnel;
 
     WalkableTile cornerTile;
     WalkableTile spawnTile;
@@ -48,6 +49,13 @@ class Ghost : AnimatedSprite
             direction = value;
             dirVector = Utils.VectorByDir(direction);
         }
+    }
+
+    internal void SetSpeeds(float speedNormal, float speedFrightened, float speedTunnel)
+    {
+        this.speedNormal = speedNormal;
+        this.speedFrightened = speedFrightened;
+        this.speedTunnel = speedTunnel;
     }
 
     #region Unity
@@ -212,27 +220,27 @@ class Ghost : AnimatedSprite
 
     void UpdateInHouse()
     {
-        Move(SPEED_FRIGHTENED * Time.deltaTime);
+        Move(speedFrightened * Time.deltaTime);
     }
 
     void UpdateExiting()
     {
-        Move(SPEED_FRIGHTENED * Time.deltaTime);
+        Move(speedFrightened * Time.deltaTime);
     }
 
     void UpdateScatter()
     {
-        Move(SPEED * Time.deltaTime);
+        Move(CurrentSpeed());
     }
 
     void UpdateChasing()
     {
-        Move(SPEED * Time.deltaTime);
+        Move(CurrentSpeed());
     }
 
     void UpdateFrightened()
     {
-        Move(SPEED_FRIGHTENED * Time.deltaTime);
+        Move(speedFrightened * Time.deltaTime);
     }
 
     void UpdateEaten()
@@ -241,6 +249,10 @@ class Ghost : AnimatedSprite
     }
     #endregion
 
+    float CurrentSpeed()
+    {
+        return ((tile.IsTunnel) ? speedTunnel : speedNormal) * Time.deltaTime;
+    }
 
     void Move(float amount)
     {

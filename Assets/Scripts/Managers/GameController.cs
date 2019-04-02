@@ -20,6 +20,12 @@ class GameController : MonoBehaviour
 
     private void Start()
     {
+        if (Application.isEditor)
+        {
+            StartMenu();
+            return;
+        }
+
         intro.gameObject.SetActive(true);
         menu.gameObject.SetActive(false);
         stage.gameObject.SetActive(false);

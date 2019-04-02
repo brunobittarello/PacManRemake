@@ -17,6 +17,9 @@ class StageController : AnimatedSprite
 
     const int EXTRA_LIFE_AT = 10000;
 
+    const float FULL_SPEED = 11;
+
+
     internal static StageController instance;
     internal static bool StopGhosts;
     internal static bool IsFrozen { get { return instance.timerFreeze > 0; } }
@@ -79,9 +82,9 @@ class StageController : AnimatedSprite
         instance = this;
         SetTicksToChangeFrame(6);
 
-        LoadMap(mapText.text);
+        LoadMap();
 
-        pelletsContainer.transform.localPosition = charactersContainer.transform.localPosition = new Vector2(mapX, mapY) * -0.5f + Vector2.one * 0.5f;
+        pelletsContainer.transform.localPosition = charactersContainer.transform.localPosition = new Vector2(mapX + 1, mapY) * -0.5f + Vector2.one * 0.5f;
         SpawnPacMan();
         SpawnGhosts();
         SpawnFruit();
@@ -146,22 +149,22 @@ class StageController : AnimatedSprite
 
 
     #region MapLoading
-    void LoadMap(string data)
+    void LoadMap()
     {
         var lines = mapText.text.Split('\n');
         var halfX = lines[0].Length - 2;//Mirrored / Removing '\r'
         int id = 0;
 
         walkableTiles = new Dictionary<int, WalkableTile>();
-        mapX = halfX * 2;
+        mapX = (halfX * 2) - 1;//35
         mapY = lines.Length;
 
         for (int x = 0; x < halfX; x++)
             for (int y = 0; y < mapY; y++)
             {
                 int.TryParse(lines[mapY - 1 - y][x].ToString(), out id);
-                CreateTile(new Vector2Int(x, y), (TileType)id);
-                CreateTile(new Vector2Int(mapX - 1 - x, y), (TileType)id);//Mirror
+                CreateTile(new Vector2Int(x, y), (TileType)id);//0
+                CreateTile(new Vector2Int(mapX - x, y), (TileType)id);//Mirror //35 - 0 = 35
             }
 
         ConnectTiles();
@@ -186,7 +189,14 @@ class StageController : AnimatedSprite
 #endif
         }
 
-        walkableTiles.Add(Utils.TilePosToKey(tile), new WalkableTile(tile, id, go));
+        var wTile = new WalkableTile(tile, id, go);
+        if (id == TileType.Tunnel || id == TileType.Wrap)
+            wTile.IsTunnel = true;
+
+        if ((tile.x == 14 || tile.x == 17) && (tile.y == 7 || tile.y == 19))
+            wTile.IsUpLocked = true;
+
+        walkableTiles.Add(Utils.TilePosToKey(tile), wTile);
     }
 
     void ConnectTiles()
@@ -328,8 +338,11 @@ class StageController : AnimatedSprite
             powerUpTimer -= Time.deltaTime;
             Ghost.blinkWhite = (powerUpTimer < 2);
             if (powerUpTimer < 0)
+            {
+                pacMan.Speed = FULL_SPEED * stage.PacManSpeed;
                 for (int i = 0; i < ghosts.Length; i++)
-                    ghosts[i].OnPowerUpIsOver();                
+                    ghosts[i].OnPowerUpIsOver();
+            }
         }
         else if (ghostMomentIndex < stage.ghostStates.Length)
         {
@@ -424,6 +437,9 @@ class StageController : AnimatedSprite
         stage = stagesConfig[level];
         level++;
         UIController.instance.SetNewFruit(fruitIcons[stage.fruitId]);
+        pacMan.Speed = FULL_SPEED * stage.PacManSpeed;
+        for (int i = 0; i < ghosts.Length; i++)
+            ghosts[i].SetSpeeds(stage.GhostSpeed * FULL_SPEED, stage.GhostFrightenedSpeed * FULL_SPEED, stage.GhostTunnelSpeed * FULL_SPEED);
         ResetStage();
     }
 
@@ -514,6 +530,7 @@ class StageController : AnimatedSprite
     {
         eatGhostScore = 200;
         Ghost.blinkWhite = false;
+        pacMan.Speed = FULL_SPEED * stage.PacManPowerSpeed;
         for (int i = 0; i < ghosts.Length; i++)
             ghosts[i].OnPacManPowersUp();
         powerUpTimer = stage.PacManPowerSeconds;
@@ -552,7 +569,21 @@ class StageController : AnimatedSprite
         if (isThereAFrightened)
             SoundManager.instance.LoopGhostFrightened();
         else
-            SoundManager.instance.LoopGhostNormal(1);
+        {
+            float pitch = 1;
+            if (pelletsToCollect < 8)
+                pitch = 2;
+            else if (pelletsToCollect < 16)
+                pitch = 1.8f;
+            else if (pelletsToCollect < 32)
+                pitch = 1.6f;
+            else if (pelletsToCollect < 64)
+                pitch = 1.4f;
+            else if (pelletsToCollect < 128)
+                pitch = 1.2f;
+
+            SoundManager.instance.LoopGhostNormal(pitch);
+        }
     }
 
     void ManageGhostRelease()
@@ -635,7 +666,7 @@ class StageController : AnimatedSprite
             return false;
 
         var type = walkableTiles[key].type;
-        return type == TileType.Pellet || type == TileType.Powerup || type == TileType.Empty;
+        return type == TileType.Pellet || type == TileType.Powerup || type == TileType.Empty || type == TileType.Tunnel;
 
         //var tile = mapTiles[tilePos.x, tilePos.y];
     }

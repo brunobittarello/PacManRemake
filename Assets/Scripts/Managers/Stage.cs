@@ -20,8 +20,17 @@ public class Stage : ScriptableObject
     [Range(0, 1)]
     public float GhostTunnelSpeed;
 
-
     public int[] ghostStates;
+
+    [Header("House")]
+    public int pelletsToFreeInky;
+    public int pelletsToFreeClyde;
+
+    [Header("Elroy")]
+    public int pelletsLeftToSpeedUpBlinkyLevel1;
+    public float speedUpBlinkyLevel1;
+    public int pelletsLeftToSpeedUpBlinkyLevel2;
+    public float speedUpBlinkyLevel2;
 
 #if UNITY_EDITOR
     [MenuItem("ScriptAsset/Create Stage Config")]

@@ -2,13 +2,11 @@
 
 class PacMan : AnimatedSprite
 {
-    const float SPEED           = 8;//7
     const float CORNERING       = 0.65f;
     const float EAT_RANGE       = 0.5f;
     const float TILE_SNAPPING   = 0.99f;
     const int EAT_FRAMES        = 2;
     const float EAT_FREEZE_TIME = 0.0166f;
-
 
     [Header("Animations")]
     public Sprite[] animationMoving;
@@ -32,6 +30,7 @@ class PacMan : AnimatedSprite
     int eatingFrames;
     float eatingFreezeTimer;
 
+    internal float Speed { get; set; }
     bool IsStoped { get { return tile == tileTarget; } }
 
     #region Unity
@@ -158,7 +157,7 @@ class PacMan : AnimatedSprite
 
     void Move()
     {
-        float speedDelta = Time.deltaTime * SPEED;
+        float speedDelta = Time.deltaTime * Speed;
 
         if (eatingFreezeTimer > 0)
         {

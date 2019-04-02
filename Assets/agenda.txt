@@ -111,16 +111,18 @@
 14/03
 - Menu do jogo
 
+27/03
+- Liberação dos fantasmas;
+- Pitch up conforme peças comidas;
 
+30/30
+- Criar área de velocidade reduzida(Tunnel)
+- Criar área de bloqueio de rota dos fantasmas
 
 
 --== TODO ==--
 - Velocidades em geral
 - Centralizar os fantasmas dentro da área dele
-- Criar área de velocidade reduzida
-- Criar área de bloqueio de rota dos fantasmas
-
-- som mudar conforme peças comidas
 
 --== BackLog ==--
 - Demo
