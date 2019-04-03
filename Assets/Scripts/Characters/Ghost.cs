@@ -492,7 +492,11 @@ class Ghost : AnimatedSprite
         var result = Pathfinder.GetPathAstar(tile, StageController.instance.ghostAreaExit, Vector2Int.zero, true);
 
         if (result != null && result.Count < 2)
+        {
+            inBetwen = 0.5f;
+            tileTarget = tile.conns[Utils.ConnIndexByDir(Direction.left)];
             ChangeToStageMoment(true);
+        }
         else
             TreatPathFindResult(result);
     }
@@ -507,7 +511,8 @@ class Ghost : AnimatedSprite
 
     void PositionUpdate()
     {
-        this.transform.localPosition = Vector2.Lerp(tile.pos, tileTarget.pos, inBetwen);
+        var offset = (Status == GhostState.InHouse || Status == GhostState.Exiting || (Status == GhostState.Waiting  && Type != GhostType.Blinky)) ? new Vector2(-0.5f, 0) : Vector2.zero;
+        this.transform.localPosition = Vector2.Lerp(tile.pos, tileTarget.pos, inBetwen) + offset;
     }
 
     #region Animation

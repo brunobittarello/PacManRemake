@@ -117,12 +117,16 @@
 
 30/30
 - Criar área de velocidade reduzida(Tunnel)
-- Criar área de bloqueio de rota dos fantasmas
-
-
---== TODO ==--
 - Velocidades em geral
+
+01/04
+- Criar área de bloqueio de rota dos fantasmas
+- Tempo para liberar Inky e Clyde
+
+02/04
 - Centralizar os fantasmas dentro da área dele
+
+
 
 --== BackLog ==--
 - Demo
@@ -131,3 +135,4 @@
 --== Melhorias ==--
 - Usar mesma forma de detecção de colisão do jogo original
 - Separar as funções de controle do jogo da classe StageController e deixa lá apenas metodos de manutenção do labirinto
+- Pular no pathfinder para os corners;

@@ -60,7 +60,9 @@ static class Pathfinder
                 return tile;
             }
 
-            for (int i = 0; i < tile.conns.Length; i++)
+            int i = tile.IsUpLocked ? 1 : 0;//Skip Up node
+
+            for (; i < tile.conns.Length; i++)
             {
                 if (tile.conns[i] != null && (enableGhostArea == true || tile.conns[i].IsGhostBase == false) && tile.pos != tile.conns[i].pos + tile.dir && closeSet.Contains(tile.conns[i]) == false && openSet.Contains(tile.conns[i]) == false)
                 {

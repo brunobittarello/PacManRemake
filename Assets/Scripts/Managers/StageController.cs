@@ -202,6 +202,7 @@ class StageController : AnimatedSprite
     void ConnectTiles()
     {
         int key;
+        bool gambi = false;
         foreach (var tile in walkableTiles)
         {
             key = Utils.TilePosToKey(tile.Value.pos + Utils.VectorByDir(Direction.up));
@@ -217,7 +218,19 @@ class StageController : AnimatedSprite
             if (walkableTiles.ContainsKey(key)) tile.Value.conns[DirectionInt.RIGHT] = walkableTiles[key];
 
             if (tile.Value.type == TileType.GhostGate)
-                ghostAreaExit = tile.Value.conns[0];
+            {
+                if (gambi == true)
+                {
+                    ghostAreaExit = tile.Value.conns[0];
+                    continue;
+                }
+
+                for (int i = 0; i < tile.Value.conns.Length; i++)
+                    tile.Value.conns[i] = null;
+                gambi = true;
+            }
+
+
         }
 
         var wrapTiles = new List<WalkableTile>();
@@ -598,14 +611,14 @@ class StageController : AnimatedSprite
                         ghosts[i].StartExiting();
                     break;
                 case GhostType.Inky:
-                    if (ghosts[i].Status == GhostState.InHouse && ghosts[i].IsFrightenedInside == false && ((wasInkyReleased == false && pelletsToCollect < TOTAL_PELLETS - 30) || (wasInkyReleased && timer > 15)))//TODO 
+                    if (ghosts[i].Status == GhostState.InHouse && ghosts[i].IsFrightenedInside == false && ((wasInkyReleased == false && pelletsToCollect < TOTAL_PELLETS - 30) || (wasInkyReleased && timer > 7)))//TODO 
                     {
                         wasInkyReleased = true;
                         ghosts[i].StartExiting();
                     }
                     break;
                 case GhostType.Clyde:
-                    if (ghosts[i].Status == GhostState.InHouse && ghosts[i].IsFrightenedInside == false && ((wasClydeReleased == false && pelletsToCollect < TOTAL_PELLETS - 60) || (wasClydeReleased && timer > 30)))
+                    if (ghosts[i].Status == GhostState.InHouse && ghosts[i].IsFrightenedInside == false && ((wasClydeReleased == false && pelletsToCollect < TOTAL_PELLETS - 60) || (wasClydeReleased && timer > 14)))
                     {
                         wasClydeReleased = true;
                         ghosts[i].StartExiting();
